@@ -41,11 +41,8 @@ function myTweets(cmd){
 	client.get('statuses/home_timeline', function(error, response) {
   		if(error) throw error;
 			response.forEach(function(item){
-				if(item.user.name == 'Nicholas Cunningham'){
 					console.log(item.created_at);
 					console.log(item.text);
-				}
-
 			}); 
 	});
 
@@ -64,7 +61,15 @@ function spotifyThis(cmd, data){
     	console.log('Error occurred: ' + err);
   	}
  
-	console.log(data.tracks); 
+		var results = data.tracks.items;
+		results.forEach(function(item){
+			if(item.name.toLowerCase() == song.toLowerCase()){
+				console.log(item.artists[0].name);
+				console.log(item.name);
+				console.log(item.preview_url);
+				console.log(item.album.name);
+			}
+		}) 
 	});
 
 	recordCommand(cmd, song);
@@ -101,7 +106,6 @@ function doThis(cmd){
 
 		var commands = data.split(",");
 		executeCommand(commands[0], commands[1]);
-		console.log(commands);
 	});
 
 	recordCommand(cmd);
